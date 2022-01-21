@@ -17,6 +17,8 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
     const client = await pool.connect();
 
+    console.log('in router.post')
+
     try {
         const {
             customer_name,
@@ -25,7 +27,7 @@ router.post('/', async (req, res) => {
             zip,
             type,
             total,
-            pizzas
+            // pizzas
         } = req.body;
         await client.query('BEGIN')
         const orderInsertResults = await client.query(`INSERT INTO "orders" ("customer_name", "street_address", "city", "zip", "type", "total")
@@ -33,11 +35,11 @@ router.post('/', async (req, res) => {
         RETURNING id;`, [customer_name, street_address, city, zip, type, total]);
         const orderId = orderInsertResults.rows[0].id;
 
-        await Promise.all(pizzas.map(pizza => {
-            const insertLineItemText = `INSERT INTO "line_item" ("order_id", "pizza_id", "quantity") VALUES ($1, $2, $3)`;
-            const insertLineItemValues = [orderId, pizza.id, pizza.quantity];
-            return client.query(insertLineItemText, insertLineItemValues);
-        }));
+        // await Promise.all(pizzas.map(pizza => {
+        //     const insertLineItemText = `INSERT INTO "line_item" ("order_id", "pizza_id", "quantity") VALUES ($1, $2, $3)`;
+        //     const insertLineItemValues = [orderId, pizza.id, pizza.quantity];
+        //     return client.query(insertLineItemText, insertLineItemValues);
+        // }));
 
         await client.query('COMMIT')
         res.sendStatus(201);

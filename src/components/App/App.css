@@ -3,13 +3,27 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 70px;
+  background-color: rgb(29, 29, 139);
+  height: 90px;
   padding: 20px;
   color: white;
   margin-bottom: 20px;
+  text-align: left;
+  font-size:larger
 }
 
 .App-title {
   font-size: 2em;
+}
+
+.img{
+  width: 300px;
+}
+
+.nextBtn{
+  width: 150px;
+  height: 40px;
+  background-color: rgb(151, 184, 255);
+  border-radius: 3px;
+  margin-left: 80%;
 }
